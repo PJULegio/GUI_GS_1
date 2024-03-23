@@ -13,7 +13,7 @@ public class DzialPracownikow {
     }
 
     // static factory
-    public static DzialPracownikow createDzial(String nazwa) throws NotUniqueNameException {
+    public static DzialPracownikow createDzial(String nazwa) throws NotUniqueNameException { // TODO according to the task, the exception should be thrown by the constructor
         if (!nameList.contains(nazwa)) {
             iloscDzialow++;
             nameList.add(nazwa);
