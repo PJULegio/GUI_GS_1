@@ -21,6 +21,8 @@ public class Main {
         Collections.sort(Pracownik.pracownicy);
         System.out.println(List.of(Pracownik.pracownicy));
 
+        Pracownik user1 = new Uzytkownik("Grzegorz", "Lambda", "1990-01-01 12:00", 2, "grzeg", "12345");
+        System.out.println(user1);
 
         DzialPracownikow dzialTestowy = DzialPracownikow.createDzial("Dzial pierwszy");
         System.out.println(dzialTestowy);
