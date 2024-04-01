@@ -6,11 +6,11 @@ public class Brygadzista extends Uzytkownik {
         super(imie, nazwisko, dataUrodzenia, dzial, login, haslo);
     }
 
-    public void assignedBrigades() {
-        // TODO
+    public void assignedBrigades() { // TODO
+
     }
 
-    public void assignedTasks() {
-        // TODO
+    public void assignedTasks() { // TODO
+
     }
 }
