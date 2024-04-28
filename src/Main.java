@@ -8,21 +8,28 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         DzialPracownikow dzial1 = DzialPracownikow.createDzial("Dzial pierwszy");
-        System.out.println(dzial1 + " " + dzial1.getId() + " " + dzial1.getNazwa());
+        System.out.println(dzial1);
+        System.out.println("Pracownicy dzialu 1: " + dzial1.getListaPracownikow());
 
         DzialPracownikow dzial2 = DzialPracownikow.createDzial("Dzial drugi");
-        System.out.println(dzial2 + " " + dzial2.getId() + " " + dzial2.getNazwa());
+        System.out.println(dzial2);
+        System.out.println("Pracownicy dzialu 2: " + dzial2.getListaPracownikow());
 
         Pracownik test = new Specjalista("Grzegorz", "Sniezko", "2000-08-16 20:00", 1, "Informatyk");
-        Pracownik test2 = new Specjalista("Grzegorz", "Skala", "1999-01-01 12:00", 2, "Programista");
         Pracownik test3 = new Specjalista("Grzegorz", "Alfa", "2002-01-01 12:00", 1, "Administrator");
+        Pracownik test2 = new Specjalista("Grzegorz", "Skala", "1999-01-01 12:00", 2, "Programista");
+        Pracownik test4 = new Specjalista("Grzegorz", "AlfaOld", "1970-01-01 12:00", 1, "Administrator");
 
         System.out.println(List.of(Pracownik.pracownicy));
         Collections.sort(Pracownik.pracownicy);
         System.out.println(List.of(Pracownik.pracownicy));
 
         Pracownik user1 = new Uzytkownik("Grzegorz", "Lambda", "1990-01-01 12:00", 2, "grzeg", "12345");
-        System.out.println(user1);
+        System.out.println("Uzytkownik 1: " + user1);
+        user1.zmienNazwe("Robert", "Funkcja");
+        System.out.println("Uzytkownik 1 po zmianie: " + user1);
+
+        System.out.println("Pracownicy dzialu 1: " + dzial1.getListaPracownikow());
 
         DzialPracownikow dzialTestowy = DzialPracownikow.createDzial("Dzial pierwszy");
         System.out.println(dzialTestowy);
