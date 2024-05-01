@@ -25,6 +25,10 @@ public class Uzytkownik extends Pracownik {
         iloscSpecjalistow++;
     }
 
+    public String getInicjaly() {
+        return inicjal;
+    }
+
     @Override
     public void zmienNazwe(String imie, String nazwisko) {
         super.zmienNazwe(imie, nazwisko);

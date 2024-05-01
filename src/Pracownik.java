@@ -10,13 +10,13 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     private String imie;
     private String nazwisko;
     private final LocalDateTime dataUrodzenia;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private int dzial;
 
     public Pracownik(String imie, String nazwisko, String dataUrodzenia, int dzial) {
         this.id = iloscPracownikow;
         this.imie = imie;
         this.nazwisko = nazwisko;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         this.dataUrodzenia = LocalDateTime.parse(dataUrodzenia, formatter);
         this.dzial = dzial;
         createPracownik(dzial);
