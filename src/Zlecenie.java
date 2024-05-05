@@ -11,7 +11,7 @@ public class Zlecenie implements Runnable {
     private LocalDateTime dataRozpoczecia;
     private LocalDateTime dataZakonczenia;
 
-    // Constructors
+    // Constructors - start
     public Zlecenie(boolean isPlanned) {
         if(isPlanned)
             this.isPlanned = Planned.Planowane;
@@ -24,6 +24,7 @@ public class Zlecenie implements Runnable {
     public Zlecenie(boolean isPlanned, Brygada brygada) {
         this(isPlanned);
         this.brygada = brygada;
+        przypiszDoBrygadzisty(brygada);
     }
 
     public Zlecenie(boolean isPlanned, List<Praca> listaPrac) {
@@ -35,21 +36,26 @@ public class Zlecenie implements Runnable {
         this(isPlanned);
         this.listaPrac = listaPrac;
         this.brygada = brygada;
+        przypiszDoBrygadzisty(brygada);
     }
+    // Constructors - end
 
     // Methods
-    public void dodajPrace(Praca praca) {
-        this.listaPrac.add(praca);
-    }
+    public void dodajPrace(Praca praca) { this.listaPrac.add(praca); }
 
     public boolean dodajBrygade(Brygada brygada) {
         if(this.brygada == null) {
             this.brygada = brygada;
+            przypiszDoBrygadzisty(brygada);
             return true;
         }
         else {
             return false;
         }
+    }
+
+    private void przypiszDoBrygadzisty(Brygada brygada) {
+        brygada.getBrygadzista().dodajZlecenie(this);
     }
 
     public String statusZlecenia() { // TODO add conditions to check dates of start and completion
@@ -58,6 +64,7 @@ public class Zlecenie implements Runnable {
         else return "Utworzone";
     }
 
+    // Overrides
     @Override
     public void run() { // TODO I don't know how it works
 

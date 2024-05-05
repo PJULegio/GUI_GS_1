@@ -8,8 +8,9 @@ public class Brygada {
     private final int id;
     private String nazwa;
     private Brygadzista brygadzista;
-    private final List<Pracownik> listaPracownikow;
+    private List<Pracownik> listaPracownikow;
 
+    // Constructors
     public Brygada(String nazwa, Brygadzista brygadzista, List<Pracownik> listaPracownikow) {
         this.id = iloscBrygad;
         this.nazwa = nazwa;
@@ -24,9 +25,10 @@ public class Brygada {
 
     private void brygadaConstructorHelper(Brygadzista brygadzista) {
         iloscBrygad++;
-        brygadzista.addToBrigade(this);
+        brygadzista.dodajBrygade(this);
     }
 
+    // Methods
     public void addWorker(Pracownik nowyPracownik) {
         listaPracownikow.add(nowyPracownik);
     }
@@ -35,8 +37,14 @@ public class Brygada {
         listaPracownikow.addAll(nowyPracownik);
     }
 
+    // Overrides
     @Override
     public String toString() {
         return "brygada " + id + ": " + nazwa;
+    }
+
+    // Getters
+    public Brygadzista getBrygadzista() {
+        return brygadzista;
     }
 }
