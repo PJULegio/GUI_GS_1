@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zlecenie implements Runnable {
-    private List<Praca> listaPrac; // TODO kolekcja prac, czy to powinna być lista?
+    private static int iloscZlecen = 1;
+    private final int id;
+    private List<Praca> listaPrac;
     private Brygada brygada;
-    private enum Planned {Planowane, Nieplanowane}; // TODO czy to jest ok?
+    private enum Planned {Planowane, Nieplanowane};
     private final Planned isPlanned;
     private LocalDateTime dataUtworzenia;
     private LocalDateTime dataRozpoczecia;
@@ -13,12 +15,15 @@ public class Zlecenie implements Runnable {
 
     // Constructors - start
     public Zlecenie(boolean isPlanned) {
+        this.id = iloscZlecen++;
+
         if(isPlanned)
             this.isPlanned = Planned.Planowane;
         else
             this.isPlanned = Planned.Nieplanowane;
 
         this.dataUtworzenia = LocalDateTime.now();
+        this.listaPrac = new ArrayList<>();
     }
 
     public Zlecenie(boolean isPlanned, Brygada brygada) {
@@ -66,7 +71,12 @@ public class Zlecenie implements Runnable {
 
     // Overrides
     @Override
-    public void run() { // TODO I don't know how it works
+    public void run() {
+        listaPrac.forEach(Thread::start);
+    }
 
+    @Override
+    public String toString() {
+        return id + ": (" + (isPlanned==Planned.Planowane?"Zlecenie planowane)":"Zlecenie nieplanowane)") + listaPrac + IConsoleFormatting.ANSI_WHITE + " -> brygada " + brygada + IConsoleFormatting.ANSI_RESET;
     }
 }
