@@ -45,6 +45,7 @@ public class Praca extends Thread {
     public void setWaitFor(Praca praca) { waitFor.add(praca); }
     public void setWaitFor(List<Praca> prace) { waitFor.addAll(prace); }
 
+    // Wstrzymuje wątek do momentu wykonania poprzednich wątków
     public void canBeRunCheck() {
         for (Praca praca : waitFor) {
             if (!praca.czyZrealizowane) {

@@ -63,7 +63,7 @@ public class Zlecenie implements Runnable {
         brygada.getBrygadzista().dodajZlecenie(this);
     }
 
-    public String statusZlecenia() { // TODO add conditions to check dates of start and completion
+    public String statusZlecenia() {
         if(dataZakonczenia != null) return "Zakonczone";
         else if(dataRozpoczecia != null) return "Rozpoczete";
         else return "Utworzone";
@@ -72,7 +72,28 @@ public class Zlecenie implements Runnable {
     // Overrides
     @Override
     public void run() {
-        listaPrac.forEach(Thread::start);
+        System.out.println(id + statusZlecenia());
+        dataRozpoczecia = LocalDateTime.now();
+        System.out.println(id + statusZlecenia());
+
+        Thread[] listaWatkow = new Thread[listaPrac.size()];
+
+        for(int i = 0; i < listaPrac.size(); i++)
+            listaWatkow[i] = new Thread(listaPrac.get(i));
+
+        for (Thread thread : listaWatkow)
+            thread.start();
+
+        for (Thread thread : listaWatkow) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        dataZakonczenia = LocalDateTime.now();
+        System.out.println(id + statusZlecenia());
     }
 
     @Override
