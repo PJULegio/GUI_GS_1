@@ -14,7 +14,6 @@ public class Praca extends Thread {
     private List<Praca> waitFor;
 
     private static final Object readyLock = new Object();
-    private boolean gameReady = false;
 
     // Constructors
     public Praca(Praca.rodzajPracy rodzajPracy, int czasPracy, String opis) {
@@ -46,28 +45,38 @@ public class Praca extends Thread {
     public void setWaitFor(Praca praca) { waitFor.add(praca); }
     public void setWaitFor(List<Praca> prace) { waitFor.addAll(prace); }
 
-    // Overrides
-    @Override
-    public void run() {
-        if(id != 1) { // TODO
-            synchronized (readyLock) {
-                try {
-                    waitFor.wait();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+    public void canBeRunCheck() {
+        for (Praca praca : waitFor) {
+            if (!praca.czyZrealizowane) {
+                synchronized (readyLock) {
+                    try {
+                        readyLock.wait();
+                        canBeRunCheck();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
+    }
+
+    // Overrides
+    @Override
+    public void run() {
+        canBeRunCheck();
 
         System.out.println(IConsoleFormatting.ANSI_YELLOW + "[RUNNING]: " + IConsoleFormatting.ANSI_RESET + this);
+        // Symuluj wykonywanie pracy
         try {
             Thread.sleep(czasPracy * 1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
         System.out.println(IConsoleFormatting.ANSI_GREEN + "[DONE]: " + IConsoleFormatting.ANSI_RESET + this);
+
         synchronized (readyLock) {
-            readyLock.notify();
+            readyLock.notifyAll();
         }
         czyZrealizowane = true;
     }
@@ -75,5 +84,10 @@ public class Praca extends Thread {
     @Override
     public String toString() {
         return id + ". " + rodzajPracy + " \"" + opis + "\"";
+    }
+
+    // Getters
+    public boolean getCzyZrealizowane() {
+        return czyZrealizowane;
     }
 }

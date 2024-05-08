@@ -77,6 +77,12 @@ public class Zlecenie implements Runnable {
 
     @Override
     public String toString() {
-        return id + ": (" + (isPlanned==Planned.Planowane?"Zlecenie planowane)":"Zlecenie nieplanowane)") + listaPrac + IConsoleFormatting.ANSI_WHITE + " -> brygada " + brygada + IConsoleFormatting.ANSI_RESET;
+        return id +
+                ": (" + (isPlanned == Planned.Planowane ? "Zlecenie planowane)" : "Zlecenie nieplanowane)") +
+                listaPrac +
+                IConsoleFormatting.ANSI_WHITE +
+                " -> brygada " +
+                brygada +
+                IConsoleFormatting.ANSI_RESET;
     }
 }
