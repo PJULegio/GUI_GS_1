@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println(divider("TEST DZIALOW"));
         DzialPracownikow dzial1 = DzialPracownikow.createDzial("Dzial dostaw");
         System.out.println(dzial1);
@@ -17,6 +17,21 @@ public class Main {
         DzialPracownikow dzial3 = DzialPracownikow.createDzial("Dzial naprawczy");
         System.out.println(dzial3);
         System.out.println("Pracownicy dzialu 3: " + dzial3.getListaPracownikow() + " " + IConsoleFormatting.ANSI_WHITE + "puste OK" + IConsoleFormatting.ANSI_RESET);
+
+        // ------------------------------------------------------------------------
+        System.out.println(divider("TEST UNIKALNYCH NAZW DZIALOW"));
+
+        Thread watekUnikalnychNazw = new Thread(() -> {
+            DzialPracownikow dzialTestowy = DzialPracownikow.createDzial("Dzial przegladow");
+            System.out.println(dzialTestowy);
+            DzialPracownikow dzialTestowy2 = DzialPracownikow.createDzial("Dzial przegladow");
+            System.out.println(dzialTestowy2);
+        });
+
+        watekUnikalnychNazw.start();
+        watekUnikalnychNazw.join();
+
+        Thread.sleep(1000);
 
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST PRACOWNIKOW"));
@@ -70,13 +85,13 @@ public class Main {
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST PRAC"));
 
-        Praca praca1 = new Praca(Praca.rodzajPracy.Ogolna, 5, "Przeglad starych urzadzen");
-        Praca praca2 = new Praca(Praca.rodzajPracy.Ogolna, 20, "Dostawa nowych urzadzen", praca1);
-        Praca praca3 = new Praca(Praca.rodzajPracy.Demontaz, 10, "Demontaz przestarzalej instalacji 1", praca2);
-        Praca praca4 = new Praca(Praca.rodzajPracy.Demontaz, 30, "Demontaz przestarzalej instalacji 2", praca2);
-        Praca praca5 = new Praca(Praca.rodzajPracy.Demontaz, 10, "Demontaz przestarzalej instalacji 3", praca2);
-        Praca praca6 = new Praca(Praca.rodzajPracy.Montaz, 10, "Montaz nowej instalacji 1", praca3);
-        Praca praca7 = new Praca(Praca.rodzajPracy.Wymiana, 5, "Wymiana urzadzenia", new ArrayList<>(Arrays.asList(praca6, praca4, praca5)));
+        Praca praca1 = new Praca(Praca.rodzajPracy.Ogolna, 2, "Przeglad starych urzadzen");
+        Praca praca2 = new Praca(Praca.rodzajPracy.Ogolna, 10, "Dostawa nowych urzadzen", praca1);
+        Praca praca3 = new Praca(Praca.rodzajPracy.Demontaz, 5, "Demontaz przestarzalej instalacji 1", praca2);
+        Praca praca4 = new Praca(Praca.rodzajPracy.Demontaz, 15, "Demontaz przestarzalej instalacji 2", praca2);
+        Praca praca5 = new Praca(Praca.rodzajPracy.Demontaz, 5, "Demontaz przestarzalej instalacji 3", praca2);
+        Praca praca6 = new Praca(Praca.rodzajPracy.Montaz, 5, "Montaz nowej instalacji 1", praca3);
+        Praca praca7 = new Praca(Praca.rodzajPracy.Wymiana, 2, "Wymiana urzadzenia", new ArrayList<>(Arrays.asList(praca6, praca4, praca5)));
 
         Zlecenie zlecenieDostawcze = new Zlecenie(true, new ArrayList<>(List.of(praca2)), brygada1);
         Zlecenie zlecenieRemontowe = new Zlecenie(false, new ArrayList<>(Arrays.asList(praca3, praca4, praca5, praca6)), brygada2);
@@ -99,8 +114,10 @@ public class Main {
 
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST ZAJETOSCI PRACOWNIKOW"));
-        Praca pracaTestowa = new Praca(Praca.rodzajPracy.Montaz, 10, "Montaz probny");
+        Praca pracaTestowa = new Praca(Praca.rodzajPracy.Montaz, 5, "Montaz probny");
         Zlecenie zlecenieTestowe = new Zlecenie(true, new ArrayList<>(List.of(pracaTestowa)), brygada2);
+
+        System.out.println(zlecenieTestowe);
 
         // ------------------------------------------------------------------------
         System.out.println(divider("DZIALANIE PROGRAMU"));
@@ -116,14 +133,6 @@ public class Main {
 
         Thread watekZleceniaTestowego = new Thread(zlecenieTestowe);
         watekZleceniaTestowego.start();
-
-        // ------------------------------------------------------------------------
-        /*System.out.println(divider("TEST UNIKALNYCH NAZW DZIALOW"));
-
-        DzialPracownikow dzialTestowy = DzialPracownikow.createDzial("Dzial przegladow");
-        System.out.println(dzialTestowy);
-        DzialPracownikow dzialTestowy2 = DzialPracownikow.createDzial("Dzial przegladow");
-        System.out.println(dzialTestowy2);*/
     }
 
     protected static String divider(String dividerText) { return IConsoleFormatting.HEADER_COLOR + "\n------ " + dividerText + " ------" + IConsoleFormatting.ANSI_RESET; }
