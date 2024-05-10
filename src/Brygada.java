@@ -14,7 +14,9 @@ public class Brygada {
         this.id = iloscBrygad;
         this.nazwa = nazwa;
         this.brygadzista = brygadzista;
-        this.listaPracownikow = listaPracownikow;
+        // this.listaPracownikow = listaPracownikow;
+        this.listaPracownikow = new ArrayList<>();
+        this.addWorker(listaPracownikow);
         brygadaConstructorHelper(brygadzista);
     }
 
@@ -29,11 +31,28 @@ public class Brygada {
 
     // Methods
     public void addWorker(Pracownik nowyPracownik) {
-        listaPracownikow.add(nowyPracownik);
+        if(nowyPracownik.getClass() != Uzytkownik.class)
+            listaPracownikow.add(nowyPracownik);
+        else
+            System.out.println(IConsoleFormatting.ANSI_YELLOW + "\u26a0 WARNING \u26a0" +
+                    IConsoleFormatting.ANSI_RESET + " Nie mozna bylo dodac uzytkownika " + nowyPracownik);
     }
 
     public void addWorker(List<Pracownik> nowyPracownik) {
-        listaPracownikow.addAll(nowyPracownik);
+        nowyPracownik.forEach(this::addWorker);
+    }
+
+    public void setIsOccupied(boolean statement) {
+        listaPracownikow.forEach(pracownik -> pracownik.setIsOccupied(statement));
+    }
+
+    public boolean isOccupied() {
+        for(Pracownik pracownik : listaPracownikow) {
+            if (pracownik.getIsOccupied())
+                    return true;
+        }
+
+        return false;
     }
 
     // Overrides

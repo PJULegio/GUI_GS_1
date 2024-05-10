@@ -14,6 +14,8 @@ public class Zlecenie implements Runnable {
     private LocalDateTime dataRozpoczecia;
     private LocalDateTime dataZakonczenia;
 
+    private static final Object readyLock = new Object();
+
     // Constructors - start
     public Zlecenie(boolean isPlanned) {
         this.id = iloscZlecen++;
@@ -73,10 +75,27 @@ public class Zlecenie implements Runnable {
         else return "Utworzone";
     }
 
+    public void canBeRunCheck() {
+        if (brygada.isOccupied()) {
+            try {
+                readyLock.wait();
+                canBeRunCheck();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else
+            brygada.setIsOccupied(true);
+    }
+
     // Overrides
     @Override
     public void run() {
         System.out.println("Zlecenie " + id + " " + statusZlecenia());
+        synchronized (readyLock) {
+            canBeRunCheck();
+        }
+
         dataRozpoczecia = LocalDateTime.now();
         System.out.println("Zlecenie " + id + " " + statusZlecenia());
 
@@ -98,6 +117,11 @@ public class Zlecenie implements Runnable {
 
         dataZakonczenia = LocalDateTime.now();
         System.out.println("Zlecenie " + id + " " + statusZlecenia());
+
+        synchronized (readyLock) {
+            brygada.setIsOccupied(false);
+            readyLock.notifyAll();
+        }
     }
 
     @Override

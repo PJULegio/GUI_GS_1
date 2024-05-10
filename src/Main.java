@@ -50,6 +50,11 @@ public class Main {
         Brygadzista brygadzista3 = new Brygadzista("Monika", "Podolska", "1985-04-04 13:00", 3, "mon", "haslo");
         Brygada brygada3 = new Brygada("Brygada naprawcza", brygadzista3);
 
+        Brygadzista brygadzistaTest = new Brygadzista("User", "Test", "1970-01-01 00:00", 1, "test", "test");
+
+        brygada1.addWorker(user1);
+        brygada1.addWorker(brygadzistaTest);
+
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST ZLECEN"));
 
@@ -93,6 +98,11 @@ public class Main {
         System.out.println("getPowizanePrace: " + Praca.getPowiazanePrace(zleceniePrzegladowe));
 
         // ------------------------------------------------------------------------
+        System.out.println(divider("TEST ZAJETOSCI PRACOWNIKOW"));
+        Praca pracaTestowa = new Praca(Praca.rodzajPracy.Montaz, 10, "Montaz probny");
+        Zlecenie zlecenieTestowe = new Zlecenie(true, new ArrayList<>(List.of(pracaTestowa)), brygada2);
+
+        // ------------------------------------------------------------------------
         System.out.println(divider("DZIALANIE PROGRAMU"));
 
         Thread watekZleceniaPrzegladowego = new Thread(zleceniePrzegladowe);
@@ -103,6 +113,9 @@ public class Main {
 
         Thread watekZleceniaRemontowego = new Thread(zlecenieRemontowe);
         watekZleceniaRemontowego.start();
+
+        Thread watekZleceniaTestowego = new Thread(zlecenieTestowe);
+        watekZleceniaTestowego.start();
 
         // ------------------------------------------------------------------------
         /*System.out.println(divider("TEST UNIKALNYCH NAZW DZIALOW"));

@@ -11,6 +11,7 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     private String nazwisko;
     private final LocalDateTime dataUrodzenia;
     private int dzial;
+    private boolean isOccupied;
 
     public Pracownik(String imie, String nazwisko, String dataUrodzenia, int dzial) {
         this.id = iloscPracownikow;
@@ -19,8 +20,8 @@ public abstract class Pracownik implements Comparable<Pracownik> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         this.dataUrodzenia = LocalDateTime.parse(dataUrodzenia, formatter);
         this.dzial = dzial;
+        this.isOccupied = false;
         createPracownik(dzial);
-
     }
 
     private void createPracownik(int dzial) {
@@ -54,7 +55,11 @@ public abstract class Pracownik implements Comparable<Pracownik> {
     public int getDzial() {
         return dzial;
     }
+
+    public boolean getIsOccupied() { return isOccupied; }
     // GETTERS END
+
+    public void setIsOccupied(boolean statement) { isOccupied = statement; }
 
     @Override
     public int compareTo(Pracownik comparedWorker) {
