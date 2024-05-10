@@ -91,4 +91,8 @@ public class Praca extends Thread {
     public boolean getCzyZrealizowane() {
         return czyZrealizowane;
     }
+
+    public static Zlecenie getPowiazaneZlecenie(Praca praca) { return Zlecenie.getPowiazaneZlecenie(praca); }
+
+    public static List<Praca> getPowiazanePrace(Zlecenie zlecenie) { return Zlecenie.getPowiazanePrace(zlecenie); }
 }

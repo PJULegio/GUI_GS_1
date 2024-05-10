@@ -1,11 +1,12 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Zlecenie implements Runnable {
     private static int iloscZlecen = 1;
     private final int id;
     private List<Praca> listaPrac;
+    private static Map<Praca, Zlecenie> mapaPrac = new HashMap<>();
     private Brygada brygada;
     private enum Planned {Planowane, Nieplanowane};
     private final Planned isPlanned;
@@ -34,19 +35,22 @@ public class Zlecenie implements Runnable {
 
     public Zlecenie(boolean isPlanned, List<Praca> listaPrac) {
         this(isPlanned);
-        this.listaPrac = listaPrac;
+        listaPrac.forEach(this::dodajPrace);
     }
 
     public Zlecenie(boolean isPlanned, List<Praca> listaPrac, Brygada brygada) {
         this(isPlanned);
-        this.listaPrac = listaPrac;
+        listaPrac.forEach(this::dodajPrace);
         this.brygada = brygada;
         przypiszDoBrygadzisty(brygada);
     }
     // Constructors - end
 
     // Methods
-    public void dodajPrace(Praca praca) { this.listaPrac.add(praca); }
+    public void dodajPrace(Praca praca) {
+        this.listaPrac.add(praca);
+        mapaPrac.put(praca, this);
+    }
 
     public boolean dodajBrygade(Brygada brygada) {
         if(this.brygada == null) {
@@ -64,17 +68,17 @@ public class Zlecenie implements Runnable {
     }
 
     public String statusZlecenia() {
-        if(dataZakonczenia != null) return "Zakonczone";
-        else if(dataRozpoczecia != null) return "Rozpoczete";
+        if(dataZakonczenia != null) return IConsoleFormatting.ANSI_GREEN + "Zakonczone" + IConsoleFormatting.ANSI_RESET;
+        else if(dataRozpoczecia != null) return IConsoleFormatting.ANSI_YELLOW + "Rozpoczete" + IConsoleFormatting.ANSI_RESET;
         else return "Utworzone";
     }
 
     // Overrides
     @Override
     public void run() {
-        System.out.println(id + statusZlecenia());
+        System.out.println("Zlecenie " + id + " " + statusZlecenia());
         dataRozpoczecia = LocalDateTime.now();
-        System.out.println(id + statusZlecenia());
+        System.out.println("Zlecenie " + id + " " + statusZlecenia());
 
         Thread[] listaWatkow = new Thread[listaPrac.size()];
 
@@ -93,7 +97,7 @@ public class Zlecenie implements Runnable {
         }
 
         dataZakonczenia = LocalDateTime.now();
-        System.out.println(id + statusZlecenia());
+        System.out.println("Zlecenie " + id + " " + statusZlecenia());
     }
 
     @Override
@@ -105,5 +109,23 @@ public class Zlecenie implements Runnable {
                 " -> brygada " +
                 brygada +
                 IConsoleFormatting.ANSI_RESET;
+    }
+
+    // Getters
+    public static Zlecenie getPowiazaneZlecenie(Praca praca) {
+        return mapaPrac.get(praca);
+    }
+
+    public static List<Praca> getPowiazanePrace(Zlecenie zlecenie) {
+        return mapaPrac
+                .entrySet()
+                .stream()
+                .filter(e -> Objects.equals(e.getValue(), zlecenie))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    public static Set getMapaPrac() {  // TEST
+        return mapaPrac.keySet();
     }
 }
