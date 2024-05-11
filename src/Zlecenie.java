@@ -136,15 +136,21 @@ public class Zlecenie implements Runnable {
     }
 
     // Getters
-    public static Zlecenie getPowiazaneZlecenie(Praca praca) {
-        return mapaPrac.get(praca);
-    }
-
-    public static List<Praca> getPowiazanePrace(Zlecenie zlecenie) {
+    public static Optional<Zlecenie> getPowiazaneZlecenie(int idPracy) {
         return mapaPrac
                 .entrySet()
                 .stream()
-                .filter(e -> Objects.equals(e.getValue(), zlecenie))
+                .filter(e -> e.getKey().getNumerPracy() == idPracy)
+                .map(Map.Entry::getValue)
+                .findFirst();
+    }
+
+    public static List<Praca> getPowiazanePrace(int idZlecenia) {
+        return mapaPrac
+                .entrySet()
+                .stream()
+                .filter(e -> Objects.equals(e.getValue(),
+                        mapaPrac.entrySet().stream().filter(o -> o.getValue().id == idZlecenia).findFirst().get().getValue()))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }

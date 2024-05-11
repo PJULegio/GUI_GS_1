@@ -105,12 +105,12 @@ public class Main {
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST GETTEROW"));
 
-        System.out.println("getPowizaneZlecenie: " + Zlecenie.getPowiazaneZlecenie(praca1));
-        System.out.println("getPowizanePrace: " + Zlecenie.getPowiazanePrace(zlecenieRemontowe));
+        System.out.println("getPowizaneZlecenie: " + Zlecenie.getPowiazaneZlecenie(1));
+        System.out.println("getPowizanePrace: " + Zlecenie.getPowiazanePrace(3));
         // System.out.println("test: " + Zlecenie.getMapaPrac());
 
-        System.out.println("getPowizaneZlecenie: " + Praca.getPowiazaneZlecenie(praca2));
-        System.out.println("getPowizanePrace: " + Praca.getPowiazanePrace(zleceniePrzegladowe));
+        System.out.println("getPowizaneZlecenie: " + Praca.getPowiazaneZlecenie(2));
+        System.out.println("getPowizanePrace: " + Praca.getPowiazanePrace(1));
 
         // ------------------------------------------------------------------------
         System.out.println(divider("TEST ZAJETOSCI PRACOWNIKOW"));

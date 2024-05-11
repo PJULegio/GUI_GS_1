@@ -1,6 +1,6 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Praca extends Thread {
     private static int iloscPrac = 1;
@@ -92,7 +92,9 @@ public class Praca extends Thread {
         return czyZrealizowane;
     }
 
-    public static Zlecenie getPowiazaneZlecenie(Praca praca) { return Zlecenie.getPowiazaneZlecenie(praca); }
+    public static Optional<Zlecenie> getPowiazaneZlecenie(int idPracy) { return Zlecenie.getPowiazaneZlecenie(idPracy); }
 
-    public static List<Praca> getPowiazanePrace(Zlecenie zlecenie) { return Zlecenie.getPowiazanePrace(zlecenie); }
+    public static List<Praca> getPowiazanePrace(int idZlecenia) { return Zlecenie.getPowiazanePrace(idZlecenia); }
+
+    public int getNumerPracy() { return id; }
 }
