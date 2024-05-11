@@ -92,7 +92,7 @@ public class Praca extends Thread {
         return czyZrealizowane;
     }
 
-    public static Optional<Zlecenie> getPowiazaneZlecenie(int idPracy) { return Zlecenie.getPowiazaneZlecenie(idPracy); }
+    public static Zlecenie getPowiazaneZlecenie(int idPracy) { return Zlecenie.getPowiazaneZlecenie(idPracy); }
 
     public static List<Praca> getPowiazanePrace(int idZlecenia) { return Zlecenie.getPowiazanePrace(idZlecenia); }
 

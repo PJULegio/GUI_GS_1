@@ -136,26 +136,36 @@ public class Zlecenie implements Runnable {
     }
 
     // Getters
-    public static Optional<Zlecenie> getPowiazaneZlecenie(int idPracy) {
-        return mapaPrac
-                .entrySet()
-                .stream()
-                .filter(e -> e.getKey().getNumerPracy() == idPracy)
-                .map(Map.Entry::getValue)
-                .findFirst();
+    public static Zlecenie getPowiazaneZlecenie(int idPracy) {
+        try {
+            return mapaPrac
+                    .entrySet()
+                    .stream()
+                    .filter(e -> e.getKey().getNumerPracy() == idPracy)
+                    .map(Map.Entry::getValue)
+                    .findFirst()
+                    .get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     public static List<Praca> getPowiazanePrace(int idZlecenia) {
-        return mapaPrac
-                .entrySet()
-                .stream()
-                .filter(e -> Objects.equals(e.getValue(),
-                        mapaPrac.entrySet().stream().filter(o -> o.getValue().id == idZlecenia).findFirst().get().getValue()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+        try {
+            return mapaPrac
+                    .entrySet()
+                    .stream()
+                    .filter(e -> Objects.equals(e.getValue(),
+                            mapaPrac.entrySet().stream().filter(o -> o.getValue().id == idZlecenia).findFirst().get().getValue()))
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
-    public static Set getMapaPrac() {  // TEST
+    // TEST
+    public static Set getMapaPrac() {
         return mapaPrac.keySet();
     }
 }
