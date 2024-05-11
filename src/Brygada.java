@@ -14,7 +14,6 @@ public class Brygada {
         this.id = iloscBrygad;
         this.nazwa = nazwa;
         this.brygadzista = brygadzista;
-        // this.listaPracownikow = listaPracownikow;
         this.listaPracownikow = new ArrayList<>();
         this.addWorker(listaPracownikow);
         brygadaConstructorHelper(brygadzista);

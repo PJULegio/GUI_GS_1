@@ -8,9 +8,9 @@ public class Zlecenie implements Runnable {
     private List<Praca> listaPrac;
     private static Map<Praca, Zlecenie> mapaPrac = new HashMap<>();
     private Brygada brygada;
-    private enum Planned {Planowane, Nieplanowane};
+    private enum Planned {Planowane, Nieplanowane}
     private final Planned isPlanned;
-    private LocalDateTime dataUtworzenia;
+    private final LocalDateTime dataUtworzenia;
     private LocalDateTime dataRozpoczecia;
     private LocalDateTime dataZakonczenia;
 
@@ -162,10 +162,5 @@ public class Zlecenie implements Runnable {
         } catch (NoSuchElementException e) {
             return null;
         }
-    }
-
-    // TEST
-    public static Set getMapaPrac() {
-        return mapaPrac.keySet();
     }
 }

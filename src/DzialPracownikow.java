@@ -18,8 +18,6 @@ public class DzialPracownikow {
 
     private DzialPracownikow(String nazwa, boolean isNameUnique) {
         throw new NotUniqueNameException(nazwa);
-        // trying to follow the task instructions
-        // the exception should be thrown by the constructor
     }
 
     // static factory
